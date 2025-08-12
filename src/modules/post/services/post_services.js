@@ -14,8 +14,8 @@ export const add_post_service = async   ( req , res ) => {
         const { title , description , allowComments ,tags } = req.body
 
         const   { files } = req
-        if (!files) { return  res.status(404).json({ message :" there is no uploaded file" })}
         const images = []
+        let Tags = []
         
         
         // check if the tags included valid userId
@@ -24,8 +24,8 @@ export const add_post_service = async   ( req , res ) => {
             if ( users.length !== tags.length  ) {
                 return res.status(400).json({message : "invalid tags"})
             }
-            postContent.tags = tags
-            console.log(tags , "tags me" );
+             Tags = tags
+            // console.log(Tags , "tags me" );
             
         }  
         
@@ -50,8 +50,8 @@ export const add_post_service = async   ( req , res ) => {
             title :title ,
             description  : description ,
             allowComments : allowComments ,
-            tags , 
-            pictures : images
+            pictures : images ,
+            tags :Tags
         }
         // console.log(postContent , ";;;;;;;;;;;;;;;");
         
@@ -102,7 +102,7 @@ export const list_post_service = async   ( req , res ) => {
         
         
     } catch (error) {
-        console.log(  "error from  =======>"  , error );
+        console.log(  "error from  =======> list posts services"  , error );
         res.status(500).json({ message : "internal server error "})
     }
 }
