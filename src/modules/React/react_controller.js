@@ -8,12 +8,11 @@ const react_controller = Router()
 
 const { USER ,  ADMIN , SUPER_ADMIN  }  = system_role
 
-react_controller.use( authentication_middleware  )
+react_controller.use( authentication_middleware()  )
 
-react_controller.post( "add_react"  /*, authorization_middleware([USER])*/ ,asyncHandler( react_services.add_react_service  )   )
-react_controller.post( "remove_react"  /*, authorization_middleware([USER])*/ ,asyncHandler( react_services.remove_react_service  )   )
-react_controller.patch( "list_react"  , asyncHandler( react_services.delete_react_service  )   )
-
+react_controller.post( "/create/:reactOnId"  /*, authorization_middleware([USER])*/ ,asyncHandler( react_services.add_react_service  )   )
+react_controller.patch( "/remove/:reactId"  /*, authorization_middleware([USER])*/ ,asyncHandler( react_services.remove_react_service  )   )
+react_controller.get( "/list_react"  , asyncHandler( react_services.delete_react_service  )   )
 
 
 

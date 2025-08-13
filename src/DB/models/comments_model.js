@@ -37,11 +37,17 @@ const comments_schema = new mongoose.Schema({
     require : true  } ,
 
 
+    
+
 
 
 } , {timestamp:true} )
 
-
+comments_schema.virtual( "post" , {
+    ref : "posts" ,
+    localField : "_id" , 
+    foreignField : "CommentOnId"
+} )
 
 const comments_model = mongoose.models.comment ||  mongoose.model("comments" , comments_schema)
 

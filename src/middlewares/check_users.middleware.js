@@ -1,7 +1,9 @@
 import user_model from "../DB/models/users_model.js"
 
 
-export const check_users = async (req , res , next )=>{
+export const checkUsers_middleware =  ( )=>{
+
+return async (req , res ,next)=> {
 
     const tags = req.body.tags ? req.body.tags : false 
     const  mentions = req.body.mentions ? req.body.mentions : false
@@ -19,5 +21,8 @@ export const check_users = async (req , res , next )=>{
     
 
     }
+
+    next()
+}
 
 }

@@ -32,12 +32,20 @@ const post_schema = new mongoose.Schema({
 },{timestamps:true} ) 
 
 //comments virtual 
+// to make the data coming when i use it form the posts
 post_schema.virtual( "comment" , {
     ref : "comments" ,
     localField : "_id" , 
     foreignField : "CommentOnId"
 } )
 
+
+// to make the data coming when i use it form the posts
+post_schema.virtual( "react" , {
+    ref : "reacts" ,
+    localField : "_id" , 
+    foreignField : "reactOnId"
+} )
 
 const post_model =  mongoose.models.post || mongoose.model("posts" , post_schema )
 
