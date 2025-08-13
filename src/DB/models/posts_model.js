@@ -21,7 +21,7 @@ const post_schema = new mongoose.Schema({
         default : true ,
         // folderId : String  // tell know this is for what
     } ,
-    pictures :[{
+    PostPictures :[{
         URLS: [{ 
         public_id : String,
         secure_url : String  }],
@@ -31,7 +31,12 @@ const post_schema = new mongoose.Schema({
     }],
 },{timestamps:true} ) 
 
-
+//comments virtual 
+post_schema.virtual( "comment" , {
+    ref : "comments" ,
+    localField : "_id" , 
+    foreignField : "CommentOnId"
+} )
 
 
 const post_model =  mongoose.models.post || mongoose.model("posts" , post_schema )

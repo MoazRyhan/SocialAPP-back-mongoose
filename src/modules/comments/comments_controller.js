@@ -12,7 +12,7 @@ const { USER ,  ADMIN , SUPER_ADMIN  }  = system_role
 comments_controller.use( authentication_middleware()  )
 
 comments_controller.post( "/create/:CommentOnId"   /* ,authorization_middleware([USER])*/ ,  Multer_host( ImageExtensions ).array("images" ,5 ),asyncHandler( comments_services.add_comment_service  )   )
-comments_controller.get( "list_comments"  , asyncHandler( comments_services.list_comment_service  )   )
+comments_controller.get( "/list_comments"  , asyncHandler( comments_services.list_comment_service  )   )
 
 
 

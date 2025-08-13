@@ -15,11 +15,25 @@ export const add_comment_service = async   ( req , res ) => {
         const { _id : ownerId } = req.login_user 
         const { comment , mentions  ,tags  , OnModel } = req.body
         const { CommentOnId } = req.params
- 
         const   { files } = req
+ 
+        // console.log(comment);
+        
         const images = []
         let Tags = []
+        let Mentions = []
         
+        
+        // check if the tags included valid userId
+        if (mentions?.length) {
+            const users = await user_model.find({_id : {$in:mentions}})
+            if ( users.length !== mentions.length  ) {
+                return res.status(400).json({message : "invalid tags"})
+            }
+            Mentions = mentions
+            // console.log(tags , "tags me" );
+            
+        }  
         
         // check if the tags included valid userId
         if (tags?.length) {
@@ -32,12 +46,12 @@ export const add_comment_service = async   ( req , res ) => {
             
         }  
 
-        if (OnModel == "Post") {
-            const post = await post_model.findById({_id :CommentOnId , allowedComments : true })
+        if (OnModel == "posts") {
+            const post = await post_model.findOne({_id :CommentOnId , allowComments : true })
             if (!post) {
                 return res.status(400).json({ message : "post not found or comment not found" })
             }
-        }else if (OnModel == "Comment"){
+        }else if (OnModel == "comments"){
             const comment = await comments_model.findById(CommentOnId)
             if (!comment) {
                 return res.status(400).json({ message : "comment not found" })
@@ -66,18 +80,18 @@ export const add_comment_service = async   ( req , res ) => {
             comment  : comment ,
             mentions  :mentions  ,
             tags : Tags ,
-            pictures : images
+            CommentPictures : images ,
+            commentOnId : CommentOnId ,
+            onModel : OnModel
         }
 
 
-        CommentContent.CommentOnId = CommentOnId
-        CommentContent.OnModel = OnModel
         
         // console.log(postContent , ";;;;;;;;;;;;;;;");
-        const CreatedPost =  await comments_model.create(CommentContent) 
+        const CreatedComment =  await comments_model.create(CommentContent) 
         
         
-       return res.status(200).json({ massage: "your comment has been added" , comments : CreatedPost })
+       return res.status(200).json({ massage: "your comment has been added" , comments : CreatedComment })
         
         
     } catch (error) {
@@ -93,19 +107,19 @@ export const list_comment_service = async   ( req , res ) => {
             [
                 {
                     path : "ownerId" ,
-                    // match : {OnModel :"Comment"},
+                    // match : {OnModel :"comment"},
                     // select : "content -_id"
 
-                    populate : [{
-                        path : "ownerId",
-                        select : "name -_id"
-                    }]
+                    // populate : [{
+                    //     path : "ownerId",
+                    //     select : "name -_id"
+                    // }]
 
 
                 },
                 {
                     path : "commentOnId" ,
-                    select : "name -_id" ,
+                    // select : "name -_id" ,
 
                 }
             ]

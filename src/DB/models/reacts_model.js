@@ -1,6 +1,6 @@
 
 import mongoose from "mongoose";
-import { reacts_types } from "../../constants/constant";
+import { reacts_types } from "../../constants/constant.js";
 
 
 const reacts_schema = new mongoose.Schema({ 
@@ -9,12 +9,17 @@ const reacts_schema = new mongoose.Schema({
      type : mongoose.Schema.Types.ObjectId ,
      refPath :"onModel" ,
      require : true  } ,
+
     ownerId: {type :mongoose.Schema.Types.ObjectId ,
      ref :"users" ,
      require :true} ,
+
+
     onModel:{ type : String,
-     enum:["Post" , "Comment"] 
+     enum:["posts" , "comments"] 
      },
+
+
    reactType :{type :String ,
     enum : Object.values(reacts_types)
    }

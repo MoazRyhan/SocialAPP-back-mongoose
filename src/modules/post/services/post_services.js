@@ -12,8 +12,8 @@ export const add_post_service = async   ( req , res ) => {
 
         const { _id : ownerId } = req.login_user 
         const { title , description , allowComments ,tags } = req.body
-
         const   { files } = req
+
         const images = []
         let Tags = []
         
@@ -50,7 +50,7 @@ export const add_post_service = async   ( req , res ) => {
             title :title ,
             description  : description ,
             allowComments : allowComments ,
-            pictures : images ,
+            PostPictures : images ,
             tags :Tags
         }
         // console.log(postContent , ";;;;;;;;;;;;;;;");
@@ -90,7 +90,7 @@ export const list_post_service = async   ( req , res ) => {
                 {
                     path : "ownerId" ,
                     select : "name" ,
-
+                    
                 }
             ]
         )

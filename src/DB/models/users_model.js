@@ -123,6 +123,6 @@ user_schema.post( "findOneAndDelete"  , async function (doc) {
 
 
 
- const user_model =  mongoose.models.users   || mongoose.model( "users" , user_schema  )
+ const user_model =  mongoose.models.user   || mongoose.model( "users" , user_schema  )
  
  export default user_model
