@@ -35,7 +35,4 @@ const router_handler = (app) =>{
 
 }
 
-
-
-
 export default router_handler 
